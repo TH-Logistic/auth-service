@@ -9,10 +9,10 @@ class Settings(BaseSettings):
     postgres_user: str = "postgres"
     postgres_password: str = "postgres"
     algorithm: str = 'HS256'
-    secret_key: str
+    secret_key: str = 'secret'
     mongo_initdb_host: str = "localhost"
     mongo_initdb_port: int = 27017
-    mongo_initdb_database: str = "database"
+    mongo_initdb_database: str = "tplogistic"
     mongo_initdb_root_username: str = "mongo"
     mongo_initdb_root_password: str = "mongo"
 
@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         return f"postgresql://{self.postgres_user}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
 
     def get_mongo_database_url(self):
-        return f"mongodb+srv://{self.mongo_initdb_root_username}:{self.mongo_initdb_root_password}@{self.mongo_initdb_host}:{self.postgres_port}/{self.mongo_initdb_database}?retryWrites=true&w=majority"
+        return f"mongodb://{self.mongo_initdb_root_username}:{self.mongo_initdb_root_password}@{self.mongo_initdb_host}:{self.mongo_initdb_port}"
 
 
 settings = Settings()

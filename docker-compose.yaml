@@ -14,10 +14,13 @@ services:
   auth_mongo: 
     image: mongo
     container_name: auth_mongo_container
+    ports:
+      - 27017:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD
-      - MONGO_INITDB_DATABASE
+    volumes:
+      - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   auth:
     build: 

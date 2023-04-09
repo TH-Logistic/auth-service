@@ -2,16 +2,16 @@ from fastapi import APIRouter, Query, HTTPException, Body, Security, Response
 from fastapi.responses import JSONResponse
 from fastapi.security import SecurityScopes
 from datetime import timedelta
-from ..models.token_payload import TokenPayload
+from src.models.token_payload import TokenPayload
+
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from ..models.base_response import BaseResponse
-from ..models.role import Role
-from ..schemas.user import UserOut, UserCreate
-from ..dependencies import auth
-from ..config.database import get_db
-from ..models.token import Token, TokenType
-from ..crud import user
+from src.models.base_response import BaseResponse
+from src.models.role import Role
+from src.schemas.user import UserOut, UserCreate
+from src.dependencies import auth
+from src.models.token import Token, TokenType
+from src.crud import user
 
 router = APIRouter(prefix="")
 
@@ -19,9 +19,9 @@ user_crud = user.UserCRUD()
 
 
 @router.post("/login")
-async def login(response: Response, email: str = Body(), password: str = Body(), db: Session = Depends(get_db),):
-    user = auth.authenticate_user(email=email, password=password, db=db)
-    
+async def login(response: Response, email: str = Body(), password: str = Body()):
+    user = auth.authenticate_user(email=email, password=password)
+
     if not user:
         content = BaseResponse(
             False,
@@ -58,8 +58,8 @@ async def login(response: Response, email: str = Body(), password: str = Body(),
 
 
 @router.post("/register")
-async def register(user_create: UserCreate = Body(), db: Session = Depends(get_db)):
-    user = user_crud.create_user(user_create, db=db)
+async def register(user_create: UserCreate = Body()):
+    user = user_crud.create_user(user_create)
 
     if user:
         access_token = auth.create_token(
@@ -89,10 +89,9 @@ async def register(user_create: UserCreate = Body(), db: Session = Depends(get_d
 
 
 @router.get("/check-permissions")
-async def check_permission(scopes: list[str] = Body(), db: Session = Depends(get_db), token: str = Depends(auth.oauth2_scheme)):
+async def check_permission(scopes: list[str] = Body(), token: str = Depends(auth.oauth2_scheme)):
     user = auth.get_current_user(
         security_scopes=SecurityScopes(scopes),
-        db=db,
         token=token
     )
     return {

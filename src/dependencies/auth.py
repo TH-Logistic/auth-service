@@ -4,7 +4,7 @@ from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from sqlalchemy.orm import Session
-from ..crud.user import UserCRUD
+from src.crud.user import UserCRUD
 from src.models.token_payload import TokenPayload
 from ..config.settings import settings
 
@@ -21,7 +21,6 @@ oauth2_scheme = OAuth2PasswordBearer(
 
 def get_current_user(
         security_scopes: SecurityScopes,
-        db: Session,
         token: str = Depends(oauth2_scheme)
 ):
     credentials_exception = HTTPException(
@@ -49,7 +48,7 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    user = user_crud.get_user_by_id(db=db, id=id)
+    user = user_crud.get_user_by_id(id=id)
 
     if not user:
         raise credentials_exception
@@ -65,8 +64,8 @@ def get_current_user(
     return user
 
 
-def authenticate_user(email: str, password: str, db: Session):
-    user = user_crud.get_user_by_email(email=email, db=db)
+def authenticate_user(email: str, password: str):
+    user = user_crud.get_user_by_email(email=email)
 
     if not user:
         return False

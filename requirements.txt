@@ -10,4 +10,4 @@ pytest
 sqlalchemy
 psycopg2
 
-motor
+pymongo
