@@ -1,0 +1,13 @@
+fastapi[all]
+python-multipart
+autopep8
+python-dotenv
+python-jose
+passlib[bcrypt]
+httpx
+pytest
+
+sqlalchemy
+psycopg2
+
+motor
