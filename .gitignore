@@ -3,3 +3,7 @@
 .vscode/
 env
 *.env
+
+!.env.example
+
+*.pem

@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .settings import settings
-from motor import motor_asyncio
 import pymongo
 
 engine = create_engine(settings.get_postgres_database_url())
