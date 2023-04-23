@@ -45,11 +45,7 @@ def get_current_user(
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=BaseResponse(
-                False,
-                "Invalid token credential",
-                data=None
-            ),
+            detail="Invalid token credential",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
@@ -64,11 +60,7 @@ def get_current_user(
         if scope not in token_scopes:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail=BaseResponse(
-                    False,
-                    "Not enough permission",
-                    data=None
-                ),
+                detail="Not enough permission",
                 headers={"WWW-Authenticate": "Bearer"},
             )
     return user

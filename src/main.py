@@ -28,7 +28,7 @@ def handle_exceptions(req: Request, err: Exception):
     message = ''
     status_code = 500
     if isinstance(err, HTTPException):
-        message = err.message
+        message = err.detail
         status_code = err.status_code
 
     if isinstance(err, errors.DuplicateKeyError):
