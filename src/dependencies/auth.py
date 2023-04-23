@@ -26,7 +26,7 @@ def get_current_user(
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail=BaseResponse(False, 'Could not validate credential', data=None),
+        detail='Could not validate credential',
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -51,7 +51,6 @@ def get_current_user(
 
     user = user_crud.get_user_by_id(id=id)
 
-    print(user)
     if not user:
         raise credentials_exception
 
