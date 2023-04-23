@@ -88,7 +88,7 @@ async def register(user_create: UserCreate = Body()):
         }
 
 
-@router.get("/check-permissions")
+@router.post("/check-permissions")
 async def check_permission(scopes: list[str] = Body(), token: str = Depends(auth.oauth2_scheme)):
     user = auth.get_current_user(
         security_scopes=SecurityScopes(scopes),
