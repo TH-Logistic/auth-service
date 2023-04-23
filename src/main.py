@@ -23,11 +23,23 @@ app.add_middleware(
 )
 
 
+@app.exception_handler(HTTPException)
+def handle_http_exception(req: Request, err: HTTPException):
+    response = BaseResponse()
+    response.message = err.detail
+    response.success = False
+    response.data = None
+
+    return JSONResponse(
+        content=jsonable_encoder(response),
+        status_code=err.status_code
+    )
+
+
 @app.exception_handler(Exception)
 def handle_exceptions(req: Request, err: Exception):
     message = ''
     status_code = 500
-    print(err)
     if isinstance(err, HTTPException):
         message = err.detail
         status_code = err.status_code
