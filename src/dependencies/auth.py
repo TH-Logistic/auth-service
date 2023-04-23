@@ -3,6 +3,7 @@ import datetime
 from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, SecurityScopes
+from src.models.base_response import BaseResponse
 from sqlalchemy.orm import Session
 from src.crud.user import UserCRUD
 from src.models.token_payload import TokenPayload
@@ -25,7 +26,7 @@ def get_current_user(
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
+        detail=BaseResponse(False, 'Could not validate credential', data=None),
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -44,7 +45,11 @@ def get_current_user(
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token credential",
+            detail=BaseResponse(
+                False,
+                "Invalid token credential",
+                data=None
+            ),
             headers={"WWW-Authenticate": "Bearer"},
         )
 
@@ -59,7 +64,11 @@ def get_current_user(
         if scope not in token_scopes:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Not enough permission",
+                detail=BaseResponse(
+                    False,
+                    "Not enough permission",
+                    data=None
+                ),
                 headers={"WWW-Authenticate": "Bearer"},
             )
     return user
