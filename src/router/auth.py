@@ -23,11 +23,11 @@ async def login(response: Response, email: str = Body(), password: str = Body())
     user = auth.authenticate_user(email=email, password=password)
 
     if not user:
-        content = BaseResponse(
-            False,
-            "Incorrect username or password",
-            None
-        )
+        content = BaseResponse()
+        content.success = False
+        content.message = "Incorrect username or password"
+        content.data = None
+
         response.status_code = 401
         return content
     else:

@@ -27,6 +27,7 @@ app.add_middleware(
 def handle_exceptions(req: Request, err: Exception):
     message = ''
     status_code = 500
+    print(err)
     if isinstance(err, HTTPException):
         message = err.detail
         status_code = err.status_code
