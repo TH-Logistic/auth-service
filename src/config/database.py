@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .settings import settings
 import pymongo
+from src.models.indexes import createIndex
 
 engine = create_engine(settings.get_postgres_database_url())
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -19,5 +20,6 @@ def get_db():
 
 mongo_client = pymongo.MongoClient(settings.get_mongo_database_url())
 
-
 mongo_db = mongo_client.tplogistic
+
+createIndex(mongo_db)

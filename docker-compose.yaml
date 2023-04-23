@@ -15,9 +15,13 @@ services:
 
   auth_mongo: 
     image: mongo
-    container_name: auth_mongo_container
+    container_name: mongo_container
+    networks:
+      - app_network
     ports:
       - 27017:27017
+    expose:
+      - 27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD
@@ -44,6 +48,8 @@ services:
       - auth_postgres
     ports:
       - 8000:80
+    networks:
+      - app_network
     restart: on-failure
 
 networks:

@@ -50,6 +50,7 @@ def get_current_user(
 
     user = user_crud.get_user_by_id(id=id)
 
+    print(user)
     if not user:
         raise credentials_exception
 

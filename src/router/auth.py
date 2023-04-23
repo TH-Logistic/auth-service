@@ -94,6 +94,7 @@ async def check_permission(scopes: list[str] = Body(), token: str = Depends(auth
         security_scopes=SecurityScopes(scopes),
         token=token
     )
+
     return {
         "success": True,
         "message": None,

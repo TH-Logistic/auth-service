@@ -1,14 +1,11 @@
 from fastapi import Depends, HTTPException
 from bson import ObjectId
-from ..models.user import User
 from src.config.settings import settings
 from sqlalchemy.orm import Session
 from json.encoder import JSONEncoder
-import sqlalchemy.exc
 from ..schemas.user import UserCreate, UserBase, UserOut, UserOutWithPassword
 from ..models.role import Role
 from psycopg2 import Error
-import uuid
 from passlib.context import CryptContext
 from src.config.database import mongo_db
 
@@ -24,15 +21,20 @@ class UserCRUD():
     def get_password_hash(self, password):
         return pwd_context.hash(password)
 
-    def get_user_by_id(self, id: str) -> User | None:
-        users = mongo_db['users'].find_one({"_id": ObjectId(id)})
-        return users
+    def get_user_by_id(self, id: str) -> UserOut | None:
+        user = mongo_db['users'].find_one({"_id": ObjectId(id)})
+
+        if user:
+            user = UserOut(**user)
+        return user
 
     def get_users(self) -> list[UserOut]:
         return mongo_db['users'].find()
 
     def get_user_by_email(self, email: str) -> UserOutWithPassword | None:
         user = mongo_db['users'].find_one({"email": email})
+        if not user:
+            return None
         return UserOutWithPassword(**user)
 
     def create_user(self, user_create: UserCreate) -> UserOut | None:
