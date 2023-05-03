@@ -31,7 +31,7 @@ services:
       - dev
 
   auth:
-    image: www.thinhlh.com:5000/auth_service
+    image: registry.thinhlh.com/auth_service
     container_name: auth_container
     environment:
       - POSTGRES_HOST

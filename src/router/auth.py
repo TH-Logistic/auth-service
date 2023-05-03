@@ -19,7 +19,7 @@ user_crud = user.UserCRUD()
 
 
 @router.post("/login")
-async def login(response: Response, phone_number: str = Body(), password: str = Body()):
+async def login(response: Response, phone_number: str = Body(alias="phoneNumber"), password: str = Body()):
     user = auth.authenticate_user(phone_number=phone_number, password=password)
 
     if not user:
