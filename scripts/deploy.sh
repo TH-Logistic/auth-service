@@ -1,6 +1,7 @@
 VERSION=$1
-docker build --file ./docker/auth/Dockerfile --tag www.thinhlh.com:5000/auth_service:${VERSION} .
-docker push www.thinhlh.com:5000/auth_service:${VERSION}
+REGISTRY_HOST=registry.thinhlh.com
+docker build --file ./docker/auth/Dockerfile --tag $REGISTRY_HOST/auth_service:${VERSION} .
+docker push $REGISTRY_HOST/auth_service:${VERSION}
 
 # Perform remote deploy with docker context
 # 1. Create a context | 
