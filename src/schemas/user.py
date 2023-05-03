@@ -11,6 +11,7 @@ class UserBase(BaseModel):
     name: str = Field(min_length=1)
     email: str = EmailStr()
     birthday: datetime.datetime | None
+    phoneNumber: str = Field(min_length=10)
     avatar: str
     role: Role
     deletedAt: datetime.datetime | None

@@ -19,8 +19,8 @@ user_crud = user.UserCRUD()
 
 
 @router.post("/login")
-async def login(response: Response, email: str = Body(), password: str = Body()):
-    user = auth.authenticate_user(email=email, password=password)
+async def login(response: Response, phone_number: str = Body(), password: str = Body()):
+    user = auth.authenticate_user(phone_number=phone_number, password=password)
 
     if not user:
         content = BaseResponse()

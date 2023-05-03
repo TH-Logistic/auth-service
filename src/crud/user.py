@@ -31,6 +31,9 @@ class UserCRUD():
     def get_users(self) -> list[UserOut]:
         return mongo_db['users'].find()
 
+    def get_user_by_phone_number(self, phone_number: str) -> UserOutWithPassword | None:
+        return mongo_db['users'].find_one({"phoneNumber": phone_number})
+
     def get_user_by_email(self, email: str) -> UserOutWithPassword | None:
         user = mongo_db['users'].find_one({"email": email})
         if not user:

@@ -27,6 +27,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD
     volumes:
       - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    profiles:
+      - dev
 
   auth:
     image: www.thinhlh.com/auth_service
@@ -56,3 +58,4 @@ networks:
   app_network:
     name: app_network
     driver: bridge
+    external: true

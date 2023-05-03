@@ -65,8 +65,8 @@ def get_current_user(
     return user
 
 
-def authenticate_user(email: str, password: str):
-    user = user_crud.get_user_by_email(email=email)
+def authenticate_user(phone_number: str, password: str):
+    user = user_crud.get_user_by_phone_number(phone_number=phone_number)
 
     if not user:
         return False
