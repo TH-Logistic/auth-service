@@ -1,10 +1,10 @@
 VERSION=$1
-docker build --file ./docker/auth/Dockerfile --tag www.thinhlh.com/auth_service:${VERSION} .
-docker push www.thinhlh.com/auth_service:${VERSION}
+docker build --file ./docker/auth/Dockerfile --tag www.thinhlh.com:5000/auth_service:${VERSION} .
+docker push www.thinhlh.com:5000/auth_service:${VERSION}
 
 # Perform remote deploy with docker context
 # 1. Create a context | 
-    # docker create context context-name --docker "host=ssh://user@server-address"
+    # docker context create context-name --docker "host=ssh://user@server-address"
     # You can config ssh key by setting the ssh inside ssh key config file ~/.ssh/config
     
 # 2. Then run all commands with --context context-name like normally
