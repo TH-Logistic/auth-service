@@ -1,4 +1,5 @@
 from fastapi import Depends, HTTPException
+from src.errors.not_found_exception import NotFoundException
 from bson import ObjectId
 from src.config.settings import settings
 from sqlalchemy.orm import Session
@@ -33,12 +34,15 @@ class UserCRUD():
 
     def get_user_by_phone_number(self, phone_number: str) -> UserOutWithPassword | None:
         user = mongo_db['users'].find_one({"phoneNumber": phone_number})
+
+        if not user:
+            raise NotFoundException('User not found')
         return UserOutWithPassword(**user)
 
     def get_user_by_email(self, email: str) -> UserOutWithPassword | None:
         user = mongo_db['users'].find_one({"email": email})
         if not user:
-            return None
+            raise NotFoundException('User not found')
         return UserOutWithPassword(**user)
 
     def create_user(self, user_create: UserCreate) -> UserOut | None:
