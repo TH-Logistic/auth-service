@@ -46,8 +46,6 @@ services:
       - MONGO_INITDB_DATABASE
       - MONGO_INITDB_ROOT_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD
-    depends_on:
-      - auth_postgres
     ports:
       - 8000:80
     networks:

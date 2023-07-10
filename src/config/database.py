@@ -20,6 +20,6 @@ def get_db():
 
 mongo_client = pymongo.MongoClient(settings.get_mongo_database_url())
 
-mongo_db = mongo_client.tplogistic
+mongo_db = mongo_client.thlogistic
 
 createIndex(mongo_db)
