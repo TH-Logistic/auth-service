@@ -1,18 +1,5 @@
 version: '3'
 services:
-  auth_postgres:
-    image: postgres:latest
-    container_name: auth_postgres_container
-    environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSRGRES_DB
-    restart: always
-    profiles:
-      - sql
-    expose:
-      - "5432"
-
   auth_mongo: 
     image: mongo
     container_name: mongo_container
@@ -34,11 +21,6 @@ services:
     image: registry.thinhlh.com/auth_service
     container_name: auth_container
     environment:
-      - POSTGRES_HOST
-      - POSTGRES_PORT
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
       - SECRET_KEY
       - ALGORITHM
       - MONGO_INITDB_HOST
